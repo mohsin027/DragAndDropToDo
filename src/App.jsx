@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { CiClock2 } from "react-icons/ci";
+import { CiClock2,CiTrash } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TiHome } from "react-icons/ti";
 import { FaStar } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
+import { Button, Modal } from "react-bootstrap";
+
+
 
 function App() {
   const todosArray = [
@@ -39,6 +42,13 @@ function App() {
   const [activeBoard, setActiveBoard] = useState(null);
   const [newTodoTitle, setNewTodoTitle] = useState("");
   const [boardSize, setBoardSize] = useState("medium");
+  const [show, setShow] = useState(false);
+  const [boardName, setBoardName] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
 
   const handleHidden = () => {
     setHidden(!hidden);
@@ -107,17 +117,40 @@ function App() {
     console.log(boardSize, "sixe");
     setBoards([...boards, { name: "New Board", size: boardSize || "medium" }]);
   };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(boardSize, "name")
+    setBoards(prevBoards => [...prevBoards, { name: boardName || "New Board", size: boardSize || "medium" }]);
+
+    // setBoards([...boards, { name: boardName || "New Board", size: boardSize || "medium" }]);
+    window.localStorage.setItem("boards", JSON.stringify(boards));
+    setShow(false)
+  };
+
+  const handleDeleteTodo = (todoId) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== todoId);
+    setTodos(updatedTodos);
+    window.localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
+  
 
   useEffect(() => {
-    let temp = JSON.parse(window.localStorage.getItem("todos"));
+    const temp = JSON.parse(window.localStorage.getItem("todos"));
     if (temp) {
       setTodos(temp);
     }
-    // let tempBoards = JSON.parse(window.localStorage.getItem("boards"));
-    // if (tempBoards) {
-    //   setBoards(tempBoards);
-    // }
+    const tempBoards = JSON.parse(window.localStorage.getItem("boards"));
+    if (tempBoards) {
+      setBoards(tempBoards);
+    }
+   
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("boards", JSON.stringify(boards));
   }, [boards]);
+
 
   return (
     <>
@@ -165,17 +198,27 @@ function App() {
               onChange={() => setBoardSize("large")}
             />
             <label htmlFor="large">large</label>
-            <button type="submit" disabled={boards.length > 3}>
+            {/* <button type="submit" disabled={boards.length > 3}>
               Create New Board
-            </button>
+            </button> */}
           </form>
+          <Button disabled={boards.length>4} variant="primary" onClick={handleShow}>
+        Create New Board
+      </Button>
+          <div>
+       
+          </div>
         </div>
       </header>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <div className="boards-div">
           {boards.map((board) => (
             <div className={"board " + board.size} key={board.name}>
+              {/* <div className="d-flex justify-content-between "> */}
+
               <h4>{capital_letter(board.name)}</h4>
+{/* <span>x</span> */}
+              {/* </div> */}
               <Droppable droppableId={board.name} key={board.name}>
                 {(provided) => (
                   <div
@@ -198,8 +241,13 @@ function App() {
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                                 ref={provided.innerRef}
-                              >
+                              ><div className="d-flex justify-content-between ">
+
                                 <p>{todo.title}</p>
+                                <button className="delete-button" onClick={() => handleDeleteTodo(todo.id)}>
+                                <CiTrash />
+                              </button>
+                              </div>
                                 <p>
                                   <span>
                                     <CiClock2 />
@@ -233,6 +281,22 @@ function App() {
           ))}
         </div>
       </DragDropContext>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Give Name to Board</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input className="input-modal" type="text" value={boardName} placeholder="New Board" onChange={(e)=>{setBoardName(e.target.value)}}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Create
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
