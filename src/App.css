@@ -1,0 +1,144 @@
+:root{
+  --primary-text:white;
+  --primary-bg:rgba(24, 35, 53, 1);
+  --primary-blue:#6045E2;
+
+}
+
+#root {
+  /* max-width: 1280px; */
+  margin: 0;
+  padding:0;
+  text-align: center;
+  box-sizing: border-box;
+  font-family: "Roboto Condensed", sans-serif;
+  ;
+}
+
+.header{
+  background-color: var(--primary-bg);
+  height: 80px;
+  color: rgba(24, 35, 53, 1);
+  color: var(--primary-text);
+  border-radius: 3px;
+  padding: 20px;
+}
+.home{
+  align-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  color: white;
+  background-color:#2B3C58;
+
+}
+.star{
+  align-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  color: rgb(232, 223, 69);
+  /* background-color:#2B3C58; */
+
+}
+
+.notification{
+  align-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  color: white;
+  background-color:#2B3C58;
+
+}
+.header button{
+  color: var(--primary-text);
+  background-color: var(--primary-blue);
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  padding: 0px 20px 0px 20px;
+}
+.header input{
+}
+.header label{
+  font-size: 0.8em;
+  align-content: center;
+background-color: rgb(221, 211, 211);
+color: black;
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+.boards-div{
+  margin: 0;
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.board{
+  color: var(--primary-blue);
+  border-radius: 5px;
+  min-width:10%;
+  /* width: 100%; */
+  height: 100%;
+}
+.large{
+  width: 50% !important;
+  /* min-width: 20%; */
+  /* background-color: red !important; */
+}
+.small{
+  width: 20% !important;
+  /* min-width: 20%; */
+  /* background-color: blue !important; */
+}
+.medium{
+  width: 35% !important;
+  /* min-width: 20%; */
+  /* background-color: green !important; */
+}
+.board h4{
+  height: 50px;
+  padding: 10px;
+  text-align: left;
+  color: var(--primary-blue);
+  background-color: #1B2E4C;
+}
+.item{
+  text-align: left;
+  color: var(--primary-text);
+  background-color: var(--primary-bg);
+  padding: 10px;
+  margin: 10px 0px;
+  height: 40px;
+  min-height: 60px;
+}
+.item p{
+  padding: 0;
+margin: 0;
+}
+.item p:nth-child(2){
+  font-size: 0.6em;
+  color: var(--primary-text);
+  padding: 0px;
+}
+
+.addTask{
+  width: 100%;
+}
+
+.add-button{
+  color: var(--primary-text);
+  background-color: var(--primary-bg);
+  margin: 5px;
+  width: 100%;
+  margin: 20px 0px 0px 0px;
+  padding: 5px 0px;
+}
+
+.custom-div{
+  background-color: red;
+}
